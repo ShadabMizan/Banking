@@ -1,94 +1,83 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Account 
 {
 	private String name;
 	private double balance;
-	private static ArrayList<String> activeAccounts = new ArrayList<String>();
 	
-	// Initialize an Account with a name and some starting balance
+	// I am treating the names of Accounts as their ID; there can only be one name in the database.
+	private static ArrayList<String> allGeneralAccounts = new ArrayList<String>();
+	
+	// Initialize a General Account with a name and some starting balance
 	Account(String name, double balance)
 	{
-		setName(name);
+		setName(name, Account.allGeneralAccounts);
 		setBalance(balance);
 	}
 	
-	// Initialize an Account with an empty balance
+	// Initialize a General Account with a name and empty balance
 	Account(String name)
 	{
-		setName(name);
-		setBalance(0.00f);
-	}
-
-	// Retrieve names of all accounts made
-	public static ArrayList<String> getActiveAccounts()
-	{
-		return activeAccounts;
+		setName(name, allGeneralAccounts);
+		setBalance(0.00);
 	}
 	
-	// Insert a new account name in alphabetical position.
-	private static void addNewActiveAccount(String newAccountName)
+	// Constructors used by child classes
+	Account(String name, double balance, ArrayList<String> accountSet)
 	{
-		// binary search returns (-index + 1) of where the value may have been inserted if it were found in the array 
-        int index = Collections.binarySearch(activeAccounts, newAccountName);
-        if (index < 0) 
-        {
-            index = -index - 1; // Insertion point
-        }
-        activeAccounts.add(index, newAccountName);
+		setName(name, accountSet);
+		setBalance(balance);
 	}
 	
-	// Retrieve an Account name
-	public String getName() 
+	Account(String name, ArrayList<String> accountSet)
 	{
-		return name;
+		setName(name, accountSet);
+		setBalance(0.00);
 	}
 
-	// Setter for account name, meant to be used once by the constructor
-	private void setName(String nameCandidate) 
+	// Used to create an Account for the first time
+	protected void setName(String nameCandidate, ArrayList<String> accountSet)
 	{
 		boolean uniqueName = true;
 		
-		// Try to reduce time complexity of this, since activeAccounts is sorted.
-		for (String name : activeAccounts)
+		if(accountSet.contains(nameCandidate))
 		{
-			if (nameCandidate == name)
-			{
-				uniqueName = false;
-				String error = "An account under "+nameCandidate+" already exists, could not create an account";
-				throw new IllegalArgumentException(error);
-			}
+			uniqueName = false;
+			String error = "An account under "+nameCandidate+" already exists, could not create an account";
+			throw new IllegalArgumentException(error);
 		}
+		
 		if (uniqueName)
 		{
-			addNewActiveAccount(nameCandidate); // Add the name in an alphabetically ordered manner
+			accountSet.add(nameCandidate);
 			this.name = nameCandidate;
 		}
 	}
 
-	// Retrieve account balance;
-	public double getBalance() {
-		return balance;
-	}
+	// Retrieve an Account name
+	public String getName() { return this.name; }
 	
 	// Setter for account balance, meant to be used once by constructor.
-	private void setBalance(double balance) {
-		if (balance >= 0.00f)
+	protected void setBalance(double balance) 
+	{
+		if (balance >= 0.00)
 		{
 			int temp = (int)(balance * 100);
 			this.balance = ((double)(temp))/100; // ensure two decimal places
 		} else 
 		{
-			String error = balance+" is an invalid value for an account, could not create an account for "+this.name;
+			String error = balance+" is an invalid value for an account, could not create an account for "+this.getName();
 			throw new IllegalArgumentException(error);
 		}
 	}
 	
+	// Retrieve account balance;
+	public double getBalance() { return this.balance; }
+	
 	@Override 
 	// Override for toString() called by System.out.println(); 
-	public String toString()
-	{
-		return "Name: "+this.name+"\nBalance: "+this.balance+"\n";
-	}
+	public String toString() { return "Name: "+this.getName()+"\nBalance: "+this.getBalance()+"\n";	}
+	
+	
+	public static ArrayList<String> getAllAccounts() { return Account.allGeneralAccounts; }
 }

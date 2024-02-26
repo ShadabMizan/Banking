@@ -1,28 +1,35 @@
-public class Main {
-
+public class Main 
+{
 	public static void main(String[] args) 
 	{
-		Account kassandra = new Account("Kassandra", 891.7687123);
-		Account phoibe = new Account("Phoibe", 9.00);
-		Account alexios = new Account("Alexios", 999.54);
+		// Savings Account
+		SavingsAccount kassandra = new SavingsAccount("Kassandra", 98.75);
 		
-		// Display sorted array
-		System.out.println(Account.getActiveAccounts());
+		// General Accounts
+		Account alexios = new Account("Alexios", 9.87);	
+		Account kass = new Account("Kassandra", 78.32);
 		
-		// Display Kassandra's bank account 
+		// Checking Accounts
+		CheckingAccount kassy = new CheckingAccount("Kassandra", 1009.75);
+		CheckingAccount markos = new CheckingAccount("Markos", 80.00);
+		
+		// Verify that only one name can exist
+		try 
+		{
+			CheckingAccount mark = new CheckingAccount("Markos", 9.72);
+		} catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		
+		// Successfully create multiple accounts of Kassandra, all a different object though
+		System.out.println(kass);
 		System.out.println(kassandra);
+		System.out.println(kassy);
 		
-		// Example exceptions for invalid accounts:
-		try {
-			Account myrinne = new Account("Myrinne", -87.21);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		
-		try {
-			Account kass = new Account("Kassandra", 12.80);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		// View the data sets of each object
+		System.out.println(Account.getAllAccounts());
+		System.out.println(SavingsAccount.getAllAccounts());
+		System.out.println(CheckingAccount.getAllAccounts());
 	}
 }
