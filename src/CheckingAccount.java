@@ -14,4 +14,11 @@ public class CheckingAccount extends Account
 	}
 	
 	public static ArrayList<String> getAllAccounts() { return CheckingAccount.allCheckingAccounts; }
+	
+	public CheckingAccount eTransfer(CheckingAccount receiver, double amount)
+	{
+		this.withdraw(amount);
+		receiver.deposit(amount);	
+		return this;
+	}	
 }

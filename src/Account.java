@@ -3,7 +3,8 @@ import java.util.ArrayList;
 public class Account 
 {
 	private String name;
-	private double balance;
+	protected double balance;
+	private String accountType;
 	
 	// I am treating the names of Accounts as their ID; there can only be one name in the database.
 	private static ArrayList<String> allGeneralAccounts = new ArrayList<String>();
@@ -57,13 +58,6 @@ public class Account
 	// Retrieve an Account name
 	public String getName() { return this.name; }
 	
-	// Setter for account balance, meant to be used once by constructor.
-	protected void setBalance(double balance) 
-	{
-		String error = balance+" is an invalid value for an account, could not create an account for "+this.getName();
-		this.balance = verifiedAmount(balance, error);
-	}
-	
 	// Verify an amount to be non negative and two decimal places.
 	protected double verifiedAmount(double amount, String errorMsg)
 	{
@@ -78,9 +72,19 @@ public class Account
 		}
 	}
 	
+	// Setter for account balance, meant to be used once by constructor.
+	protected void setBalance(double balance) 
+	{
+		String error = balance+" is an invalid value for an account, could not create an account for "+this.getName();
+		this.balance = verifiedAmount(balance, error);
+	}
+	
 	// Retrieve account balance;
 	public double getBalance() { return verifiedAmount(this.balance,"Could not retrieve balance"); }
 	
+	
+	// Retrieve account type
+	public String getAccountType() { return this.accountType; }
 	@Override 
 	// Override for toString() called by System.out.println(); 
 	public String toString() { return "Name: "+this.getName()+"\nBalance: "+this.getBalance()+"\n";	}

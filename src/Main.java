@@ -2,19 +2,11 @@ public class Main
 {
 	public static void main(String[] args) 
 	{
-		Account kassandra = new Account("Kassandra", 30.50);
+		Account kassandra = new Account("Kassandra", 310.50);
 		CheckingAccount markos = new CheckingAccount("Markos", 50.00);
+		SavingsAccount kass = new SavingsAccount("Kassandra", 80, SavingsAccount.InterestPeriods.MONTHLY);
 		
-//		markos.withdraw(90.00).deposit(80.00);
-		
-		
-		try {
-			kassandra.internalTransfer(markos, 89);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		
-		System.out.println(markos);
-		System.out.println(kassandra);
+		System.out.println(kass.gainInterest(5));
+		System.out.println(kass);
 	}
 }
