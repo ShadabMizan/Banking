@@ -12,6 +12,6 @@ public class CheckingAccount extends Account
 	{
 		super(name, allCheckingAccounts);
 	}
-
+	
 	public static ArrayList<String> getAllAccounts() { return CheckingAccount.allCheckingAccounts; }
 }

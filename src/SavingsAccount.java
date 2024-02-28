@@ -16,4 +16,5 @@ public class SavingsAccount extends Account
 	
 
 	public static ArrayList<String> getAllAccounts() { return SavingsAccount.allSavingsAccounts; }
+	
 }
