@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Account 
 {
-	private String name;
+	protected String name;
 	protected double balance;
 	private String accountType;
 	
@@ -72,6 +72,20 @@ public class Account
 		}
 	}
 	
+	// Verify an amount to be non-negative and at any precision.
+	protected double verifiedAmount(double amount, String errorMsg, int precision)
+	{
+		if (amount >= 0.00)
+		{
+			int temp = (int)(amount * Math.pow(10,precision));
+			amount = ((double)(temp))/Math.pow(10,precision); // ensure two decimal places
+			return amount;
+		} else 
+		{
+			throw new IllegalArgumentException(errorMsg);
+		}
+	}
+	
 	// Setter for account balance, meant to be used once by constructor.
 	protected void setBalance(double balance) 
 	{
@@ -133,5 +147,6 @@ public class Account
 		}
 		return this;
 	}
+	
 	
 }

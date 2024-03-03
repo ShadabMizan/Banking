@@ -4,7 +4,7 @@ public class SavingsAccount extends Account
 {
 	private static ArrayList<String> allSavingsAccounts = new ArrayList<String>();
 	private InterestPeriods interestPeriod;
-	private double interestRate = 0.05;
+	private double interestRate = 0;
 	
 	SavingsAccount(String name, double balance, InterestPeriods periodType) 
 	{
@@ -18,6 +18,15 @@ public class SavingsAccount extends Account
 		setInterestPeriod(periodType);
 	}
 	
+	SavingsAccount(String name, double balance)
+	{
+		super(name, balance, allSavingsAccounts);
+	}
+	
+	SavingsAccount(String name)
+	{
+		super(name, allSavingsAccounts);
+	}
 
 	public static ArrayList<String> getAllAccounts() { return SavingsAccount.allSavingsAccounts; }
 	
@@ -68,16 +77,36 @@ public class SavingsAccount extends Account
 		
 	}
 	
-	public double gainInterest(double years)
+	public double accumulateInterest(double years)
 	{
 		double prevBalance = this.getBalance();
+		
+		// Verify that the account has an interest period and rate set up.
+		if (this.getInterestPeriod() == null)
+		{
+			String error = this.getName()+" does not have an Interest Period set up. Cannot accumulate interest.\n";
+			throw new IllegalArgumentException(error);
+		} else if (this.getInterestRate() == 0)
+		{
+			String error = this.getName()+" does not have an Interest Rate set up. Cannot accumulate interest.\n";
+			throw new IllegalArgumentException(error);
+		}
+		
 		this.balance += calculateInterest(this.getBalance(), interestRate, this.getInterestPeriod(), years);
 		
+		// Return how much the client makes out of the interest
 		return this.getBalance() - prevBalance;
 	}
 
 	private void setInterestPeriod(InterestPeriods interestPeriod) { this.interestPeriod = interestPeriod; }
 	
 	public InterestPeriods getInterestPeriod() { return this.interestPeriod; }
+	
+	public void setInterestRate(double newRate)
+	{
+		String error = "Could not set the interest rate of "+this.getName()+" to "+newRate+"\n";
+		verifiedAmount(newRate, error, 4); // an interest rate will be kept accurate to 4 decimal places.
+	}
+	public double getInterestRate() { return this.interestRate; }
 }
 
