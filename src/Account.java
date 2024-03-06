@@ -4,7 +4,6 @@ public class Account
 {
 	protected String name;
 	protected double balance;
-	private String accountType;
 	
 	// I am treating the names of Accounts as their ID; there can only be one name in the database.
 	private static ArrayList<String> allGeneralAccounts = new ArrayList<String>();
@@ -96,12 +95,9 @@ public class Account
 	// Retrieve account balance;
 	public double getBalance() { return verifiedAmount(this.balance,"Could not retrieve balance"); }
 	
-	
-	// Retrieve account type
-	public String getAccountType() { return this.accountType; }
-	@Override 
-	// Override for toString() called by System.out.println(); 
-	public String toString() { return "Name: "+this.getName()+"\nBalance: "+this.getBalance()+"\n";	}
+//	@Override 
+//	// Override for toString() called by System.out.println(); 
+//	public String toString() { return "Name: "+this.getName()+"\nBalance: "+this.getBalance()+"\n";	}
 	
 	// Retrieve all general accounts created.
 	public static ArrayList<String> getAllAccounts() { return Account.allGeneralAccounts; }
