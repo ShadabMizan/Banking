@@ -1,58 +1,24 @@
-import java.util.ArrayList;
-
 public class Account 
 {
 	protected String name;
 	protected double balance;
 	
-	// I am treating the names of Accounts as their ID; there can only be one name in the database.
-	private static ArrayList<String> allGeneralAccounts = new ArrayList<String>();
-	
 	// Initialize a General Account with a name and some starting balance
 	Account(String name, double balance)
 	{
-		setName(name, Account.allGeneralAccounts);
+		setName(name);
 		setBalance(balance);
 	}
 	
 	// Initialize a General Account with a name and empty balance
 	Account(String name)
 	{
-		setName(name, allGeneralAccounts);
-		setBalance(0.00);
-	}
-	
-	// Constructors used by child classes
-	Account(String name, double balance, ArrayList<String> accountSet)
-	{
-		setName(name, accountSet);
-		setBalance(balance);
-	}
-	
-	Account(String name, ArrayList<String> accountSet)
-	{
-		setName(name, accountSet);
+		setName(name);
 		setBalance(0.00);
 	}
 
 	// Used to create an Account for the first time
-	protected void setName(String nameCandidate, ArrayList<String> accountSet)
-	{
-		boolean uniqueName = true;
-		
-		if(accountSet.contains(nameCandidate))
-		{
-			uniqueName = false;
-			String error = "An account under "+nameCandidate+" already exists, could not create an account";
-			throw new IllegalArgumentException(error);
-		}
-		
-		if (uniqueName)
-		{
-			accountSet.add(nameCandidate);
-			this.name = nameCandidate;
-		}
-	}
+	protected void setName(String name) { this.name = name; }
 
 	// Retrieve an Account name
 	public String getName() { return this.name; }
@@ -98,9 +64,6 @@ public class Account
 //	@Override 
 //	// Override for toString() called by System.out.println(); 
 //	public String toString() { return "Name: "+this.getName()+"\nBalance: "+this.getBalance()+"\n";	}
-	
-	// Retrieve all general accounts created.
-	public static ArrayList<String> getAllAccounts() { return Account.allGeneralAccounts; }
 	
 	// Deposit money into the account
 	public Account deposit(double balance) 
