@@ -47,7 +47,7 @@ public class ClientAccount
 	{
 		// Generate a 6 digit random integer ID
 		Random random = new Random();
-		int idLength = 6;
+		int idLength = 8;
 		int tempID = 0;
 		
 		// Iterate until a unique random integer ID is made.
@@ -56,7 +56,7 @@ public class ClientAccount
 			for (int i = 0; i < idLength; i++) { tempID += random.nextInt(10) * Math.pow(10, idLength - i); }
 			
 			// Ensure 6 digits
-			if (tempID >= 1000000) { tempID /= 10; }
+			if (tempID >= Math.pow(10, idLength)) { tempID /= 10; }
 			
 			// Check for uniqueness
 			if (allClientAccounts.keySet().contains(tempID))
@@ -176,7 +176,7 @@ public class ClientAccount
 //	{
 //		return "Name: "+this.getName()+"\nID: "+this.getID()+"\nTotal Balance: "+this.getTotalBalance()+"\n";
 //	}
-
+	
 	public String print()
 	{
 		return "ID: "+this.getID()+"\nName: "+this.getName()+"\nChecking Balance: "+this.getCheckingBalance()+"\nSavings Balance: "+this.getSavingsBalance()+"\nTotal Balance: "+this.getTotalBalance()+"\n";

@@ -1,12 +1,11 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main 
 {
 	public static void main(String[] args) 
-	{
-		 bankProgram();
-		
-		
+	{	
+		bankProgram();
 	}
 	
 	public static void bankProgram()
@@ -38,6 +37,7 @@ public class Main
 				name = scanner.next();
 				
 				ClientAccount account1 = new ClientAccount(new SavingsAccount(name), new CheckingAccount(name));
+				System.out.println("Your account ID is "+account1.getID()+". Use this to interact with your account.");
 				break;
 			case 2:
 				System.out.print("\nEnter a name: ");
@@ -50,17 +50,29 @@ public class Main
 				checkingBalance = scanner.nextDouble();
 				
 				ClientAccount account2 = new ClientAccount(new SavingsAccount(name, savingsBalance), new CheckingAccount(name, checkingBalance));
+				System.out.println("Your account ID is "+account2.getID()+". Use this to interact with your account.\n");
 				break;
 			case 3:
-				for (ClientAccount account : ClientAccount.getAllClientAccounts())
-				{
-					System.out.println(account.print());
-					
-				}
+				printAllClientAccounts();
 				break;
 			}
 		}
 		
 		scanner.close();
+	}
+	
+	public static ArrayList<ClientAccount> printAllClientAccounts()
+	{
+		ArrayList<ClientAccount> accountList = new ArrayList<ClientAccount>();
+		int i = 0;
+		for (ClientAccount account : ClientAccount.getAllClientAccounts())
+		{
+			System.out.println((i+1)+".\n"+account.print());
+			System.out.println();
+			accountList.add(account);
+			i++;
+		}
+		
+		return accountList;
 	}
 }
