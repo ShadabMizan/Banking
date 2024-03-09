@@ -25,7 +25,7 @@ public class MyFrame extends JFrame
 		
         // Add the Panels
         this.add(actionPanel, BorderLayout.WEST);
-        this.add(clientPanel, BorderLayout.EAST);
+        this.add(clientPanel, BorderLayout.CENTER);
         this.add(interactionPanel, BorderLayout.SOUTH);
 	}
 }

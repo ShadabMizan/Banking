@@ -24,16 +24,10 @@ public class ClientPanel extends ContentPanel
 		this.setPreferredSize(new Dimension(1176, 800));
 		
         JLabel clientTitle = new JLabel("Clients");
-        clientTitle.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32));
-        
-        // Attempted to make Client Title location dynamic, next time :(.
-        JPanel titlePanel = new JPanel(new BorderLayout());
-        titlePanel.setBackground(Color.WHITE);
-        titlePanel.add(clientTitle, BorderLayout.NORTH);
-        
+        clientTitle.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32));       
         clientTitle.setVerticalAlignment(JLabel.TOP);
         clientTitle.setHorizontalAlignment(JLabel.CENTER);
         
-        this.add(titlePanel, BorderLayout.CENTER);
+        this.add(clientTitle);
 	}
 }
