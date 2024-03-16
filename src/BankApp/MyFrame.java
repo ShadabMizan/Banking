@@ -10,7 +10,6 @@ public class MyFrame extends JFrame
 
 	MyFrame()
 	{
-	      
 		// Instantiate each panel
 		ActionPanel actionPanel = new ActionPanel();
 		ClientPanel clientPanel = new ClientPanel();
@@ -19,11 +18,11 @@ public class MyFrame extends JFrame
 		// Window Settings
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(800,600);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
 		
-        // Add the Panels
+        // Add the Panels at their corresponding locations
         this.add(actionPanel, BorderLayout.WEST);
         this.add(clientPanel, BorderLayout.CENTER);
         this.add(interactionPanel, BorderLayout.SOUTH);

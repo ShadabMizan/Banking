@@ -5,7 +5,7 @@ public class Main
 {
 	public static void main(String[] args) 
 	{	
-		bankProgram();
+		
 	}
 	
 	public static void bankProgram()
@@ -19,12 +19,10 @@ public class Main
 				"\n"+
 				"-1: exit\n";
 		
-		
 		while (choice != -1)
 		{
 			System.out.println(options);
 			choice = scanner.nextInt();	
-			
 			
 			String name;
 			double savingsBalance;

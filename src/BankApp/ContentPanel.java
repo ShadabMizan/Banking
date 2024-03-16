@@ -1,4 +1,5 @@
 package BankApp;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
@@ -6,12 +7,16 @@ import java.io.IOException;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 public class ContentPanel extends JPanel
 {
 	private static final long serialVersionUID = -8988141427436451461L;
+	private final Font font = loadFont("Assets/Roboto-Regular.ttf");
+	protected final Color primaryColour = new Color(0x612AFD);
 	
-	private Font font = loadFont("Assets/Roboto-Regular.ttf");
+	
+	protected JToggleButton selectedAction;
 	
     private static Font loadFont(String fontFileName) 
     {
@@ -27,4 +32,6 @@ public class ContentPanel extends JPanel
     }
     
     protected Font retrieveFont() { return this.font; }
+    
+    protected JToggleButton getSelectedAction() { return this.selectedAction; }
 }

@@ -3,19 +3,34 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
-public class ActionPanel extends ContentPanel
+public class ActionPanel extends ContentPanel implements ActionListener
 {
 	private static final long serialVersionUID = -7808300546898795531L;
-
+	
+    private ArrayList<JToggleButton> optionButtons = new ArrayList<JToggleButton>();
+    private ButtonGroup optionGroup = new ButtonGroup();
+    
+    private int numOfOptions = 5;
+    
+    
 	ActionPanel()
 	{
 		// Panel Styles
-        this.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16)); // Add 16 pixels of padding around the panel
-        this.setLayout(new BorderLayout(24,24)); // Add 24 pixels of inner paddings
+        this.setBorder(BorderFactory.createEmptyBorder(16, 0, 16, 0)); // Add 16 pixels of padding above and below the panel
+        
+        this.setLayout(new GridLayout(numOfOptions + 1,1, 16, 0)); // Plus 1 for the title's spot in the column. 16px of vertical padding
         this.setBackground(new Color(0xF0F0F2));
         
         // Action Panel will have a set width of 264px. 
@@ -28,7 +43,77 @@ public class ActionPanel extends ContentPanel
         actionTitle.setHorizontalAlignment(JLabel.CENTER);
         actionTitle.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32)); //32px Font size
         
-        // Add Components to Panel
         this.add(actionTitle);
+        
+        for (int i = 0; i < 5; i++)
+        {
+        	JPanel optionPanel = new JPanel(new BorderLayout());
+        	JToggleButton option = new JToggleButton();
+        	String optionText = "";
+        	switch(i)
+        	{
+        	case 0:
+        		optionText = "1. Create an Account";
+        		break;
+        	case 1:
+        		optionText = "2. View an Account";
+        		break;
+        	case 2:
+        		optionText = "3. Deposit Funds";
+        		break;
+        	case 3:
+        		optionText = "4. Withdraw Funds";
+        		break;
+        	case 4:
+        		optionText = "5. E-Transfer";
+        		break;
+        	}
+        	
+        	// Styles for every option
+        	option.setText(optionText);
+        	option.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 16)); // 16px font size
+        	option.setFocusable(false);
+        	option.setBorderPainted(false);
+        	option.setBackground(getBackground());
+        	option.addActionListener(this);
+ 
+        	// Add the option to its button group and its ArrayList
+            optionButtons.add(option);
+        	optionGroup.add(option);
+        	
+        	// Add the panels to the ActionPanel
+           	optionPanel.add(option, BorderLayout.CENTER);
+        	this.add(optionPanel);
+        }
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		if (e.getSource() instanceof JToggleButton)
+		{
+			updateSelectedOption(e);
+//			System.out.println(super.getSelectedAction().getText());
+		}
+	}
+	
+	private void updateSelectedOption(ActionEvent e)
+	{		
+		for (JToggleButton button : optionButtons)
+		{
+			if (button.getSelectedObjects() == null)
+			{
+				button.setBackground(null);
+				button.setBackground(getBackground()); // Reset to the parent's background colour
+				button.setForeground(Color.black);
+				
+			}
+		}
+		
+		super.selectedAction = (JToggleButton) e.getSource();
+    	super.selectedAction.setContentAreaFilled(false);
+    	super.selectedAction.setOpaque(true);
+		super.selectedAction.setBackground(super.primaryColour);
+		super.selectedAction.setForeground(Color.white);
 	}
 }
