@@ -24,8 +24,27 @@ public class ActionPanel extends ContentPanel implements ActionListener
     
     private int numOfOptions = 5;
     
+    private ActionButtonListener listener;
     
-	ActionPanel()
+	public ActionPanel(ActionButtonListener listener)
+	{       
+		panelSetup();
+		titleSetup();
+		optionSetup(listener);
+	}
+	
+	private void titleSetup()
+	{
+        // Title Styles
+        JLabel actionTitle = new JLabel("Actions");
+        actionTitle.setVerticalAlignment(JLabel.TOP);
+        actionTitle.setHorizontalAlignment(JLabel.CENTER);
+        actionTitle.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32)); //32px Font size
+        
+        this.add(actionTitle);
+	}
+	
+	private void panelSetup()
 	{
 		// Panel Styles
         this.setBorder(BorderFactory.createEmptyBorder(16, 0, 16, 0)); // Add 16 pixels of padding above and below the panel
@@ -36,15 +55,13 @@ public class ActionPanel extends ContentPanel implements ActionListener
         // Action Panel will have a set width of 264px. 
         // 800px becomes meaningless as ActionPanel will be bounded WEST
         this.setPreferredSize(new Dimension(264, 800)); 
-        
-        // Title Styles
-        JLabel actionTitle = new JLabel("Actions");
-        actionTitle.setVerticalAlignment(JLabel.TOP);
-        actionTitle.setHorizontalAlignment(JLabel.CENTER);
-        actionTitle.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32)); //32px Font size
-        
-        this.add(actionTitle);
-        
+	}
+	
+	private void optionSetup(ActionButtonListener listener)
+	{
+		this.listener = listener;
+		
+		
         for (int i = 0; i < 5; i++)
         {
         	JPanel optionPanel = new JPanel(new BorderLayout());
@@ -78,9 +95,17 @@ public class ActionPanel extends ContentPanel implements ActionListener
         	
         	// ActionPanel listens to button presses to affect UI 
         	option.addActionListener(this);
-        	
-        	// InteractionPanel listens to button presses to get the option to use.
-        	option.addActionListener(new InteractionPanel(option));
+        	option.addActionListener(new ActionListener() 
+        	{
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					if (listener != null)
+					{
+						listener.buttonClicked();
+					}
+				}
+        	});
  
         	// Add the option to its button group and its ArrayList
             optionButtons.add(option);
@@ -91,7 +116,7 @@ public class ActionPanel extends ContentPanel implements ActionListener
         	this.add(optionPanel);
         }
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -122,6 +147,6 @@ public class ActionPanel extends ContentPanel implements ActionListener
 		selectedOption.setBackground(super.primaryColour);
 		selectedOption.setForeground(Color.white);
 		
-		super.selectedAction = selectedOption;
+		ContentPanel.selectedAction = selectedOption;
 	}
 }

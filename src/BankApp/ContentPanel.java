@@ -19,7 +19,7 @@ public class ContentPanel extends JPanel
 	
 	protected String test = "hi";	
 	
-	protected JToggleButton selectedAction = new JToggleButton("Hell");
+	protected static JToggleButton selectedAction = new JToggleButton("Select an Action");
 	
     private static Font loadFont(String fontFileName) 
     {
@@ -36,5 +36,5 @@ public class ContentPanel extends JPanel
     
     protected Font retrieveFont() { return this.font; }
     
-    protected JToggleButton getSelectedAction() { return this.selectedAction; }
+    protected static JToggleButton getSelectedAction() { return selectedAction; }
 }

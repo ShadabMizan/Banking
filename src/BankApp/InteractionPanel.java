@@ -13,25 +13,19 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
 
-public class InteractionPanel extends ContentPanel implements ActionListener
+public class InteractionPanel extends ContentPanel implements ActionButtonListener
 {
 	private static final long serialVersionUID = -8965688801455558536L;
 	
-	private JLabel interactionTitle = new JLabel();
+	private JLabel label = new JLabel();
 	private JToggleButton selectedOption = new JToggleButton();
 
 	InteractionPanel()
 	{
-		panelSetup();
-        titleSetup("Select an Option");
-	}
-	
-	InteractionPanel(JToggleButton selectedOption)
-	{
-		this.selectedOption = selectedOption;
-		panelSetup();
-		titleSetup(selectedOption.getText());
+		panelSetup(); 
+		titleSetup();
 	}
 	
 	private void panelSetup()
@@ -47,30 +41,23 @@ public class InteractionPanel extends ContentPanel implements ActionListener
         this.setPreferredSize(new Dimension(1440, 200)); 
 	}
 	
-	private void titleSetup(String title)
+	private void titleSetup()
 	{
         // Title Styles
-		interactionTitle.setText(title);
-        interactionTitle.setVerticalAlignment(JLabel.TOP);
-        interactionTitle.setHorizontalAlignment(JLabel.CENTER);
-        interactionTitle.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32)); //32px Font size
-        interactionTitle.setForeground(Color.white);
+		this.label.setText("Select an Action");
+        this.label.setVerticalAlignment(JLabel.TOP);
+        this.label.setHorizontalAlignment(JLabel.CENTER);
+        this.label.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32)); //32px Font size
+        this.label.setForeground(Color.white);
         
-        this.add(interactionTitle, BorderLayout.NORTH);
+        this.add(this.label, BorderLayout.NORTH);
 	}
 
-
-	
-	
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void buttonClicked() 
 	{
-		if (e.getSource() instanceof JToggleButton)
-		{
-			this.selectedOption = (JToggleButton) e.getSource();
-			
-			System.out.println(this.selectedOption.getText());
-			this.interactionTitle.setText(this.selectedOption.getText());
-		}
+		this.label.setText(super.getSelectedAction().getText());
 	}
+	
+
 }

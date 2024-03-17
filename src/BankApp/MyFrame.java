@@ -11,9 +11,9 @@ public class MyFrame extends JFrame
 	MyFrame()
 	{
 		// Instantiate each panel
-		ActionPanel actionPanel = new ActionPanel();
 		ClientPanel clientPanel = new ClientPanel();
 		InteractionPanel interactionPanel = new InteractionPanel();
+		ActionPanel actionPanel = new ActionPanel(interactionPanel);
 		
 		// Window Settings
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
