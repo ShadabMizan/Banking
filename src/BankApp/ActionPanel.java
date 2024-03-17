@@ -75,7 +75,12 @@ public class ActionPanel extends ContentPanel implements ActionListener
         	option.setFocusable(false);
         	option.setBorderPainted(false);
         	option.setBackground(getBackground());
+        	
+        	// ActionPanel listens to button presses to affect UI 
         	option.addActionListener(this);
+        	
+        	// InteractionPanel listens to button presses to get the option to use.
+        	option.addActionListener(new InteractionPanel(option));
  
         	// Add the option to its button group and its ArrayList
             optionButtons.add(option);
@@ -110,10 +115,13 @@ public class ActionPanel extends ContentPanel implements ActionListener
 			}
 		}
 		
-		super.selectedAction = (JToggleButton) e.getSource();
-    	super.selectedAction.setContentAreaFilled(false);
-    	super.selectedAction.setOpaque(true);
-		super.selectedAction.setBackground(super.primaryColour);
-		super.selectedAction.setForeground(Color.white);
+		JToggleButton selectedOption = new JToggleButton();
+		selectedOption = (JToggleButton) e.getSource();
+    	selectedOption.setContentAreaFilled(false);
+    	selectedOption.setOpaque(true);
+		selectedOption.setBackground(super.primaryColour);
+		selectedOption.setForeground(Color.white);
+		
+		super.selectedAction = selectedOption;
 	}
 }

@@ -2,6 +2,8 @@ package BankApp;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,8 +17,9 @@ public class ContentPanel extends JPanel
 	private final Font font = loadFont("Assets/Roboto-Regular.ttf");
 	protected final Color primaryColour = new Color(0x612AFD);
 	
+	protected String test = "hi";	
 	
-	protected JToggleButton selectedAction;
+	protected JToggleButton selectedAction = new JToggleButton("Hell");
 	
     private static Font loadFont(String fontFileName) 
     {

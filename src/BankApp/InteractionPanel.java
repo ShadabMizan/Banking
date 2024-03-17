@@ -5,17 +5,36 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
-public class InteractionPanel extends ContentPanel
+public class InteractionPanel extends ContentPanel implements ActionListener
 {
 	private static final long serialVersionUID = -8965688801455558536L;
 	
+	private JLabel interactionTitle = new JLabel();
+	private JToggleButton selectedOption = new JToggleButton();
+
 	InteractionPanel()
+	{
+		panelSetup();
+        titleSetup("Select an Option");
+	}
+	
+	InteractionPanel(JToggleButton selectedOption)
+	{
+		this.selectedOption = selectedOption;
+		panelSetup();
+		titleSetup(selectedOption.getText());
+	}
+	
+	private void panelSetup()
 	{
 		// Panel Styles
 		int panelPadding = 8;
@@ -26,30 +45,32 @@ public class InteractionPanel extends ContentPanel
         // Interaction Panel will have 1440px width and 200px height. 
         // Height will not scale, since Bounded SOUTH
         this.setPreferredSize(new Dimension(1440, 200)); 
-        
+	}
+	
+	private void titleSetup(String title)
+	{
         // Title Styles
-        JLabel interactionTitle = new JLabel("Interactions");
+		interactionTitle.setText(title);
         interactionTitle.setVerticalAlignment(JLabel.TOP);
         interactionTitle.setHorizontalAlignment(JLabel.CENTER);
         interactionTitle.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32)); //32px Font size
         interactionTitle.setForeground(Color.white);
         
-        JPanel titlePanel = new JPanel();
-        titlePanel.setLayout(new BorderLayout());
-        titlePanel.setBackground(Color.gray);
-        titlePanel.add(interactionTitle, BorderLayout.CENTER);
-        
-        JPanel contents = new JPanel();
-        contents.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        contents.setBackground(Color.LIGHT_GRAY);
-        
-        JButton okButton = new JButton();
-        okButton.setPreferredSize(new Dimension(50,50));
-        contents.add(okButton);
-        
-        
-        // Add Components to Panel
-        this.add(titlePanel, BorderLayout.NORTH);
-        this.add(contents);
+        this.add(interactionTitle, BorderLayout.NORTH);
+	}
+
+
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		if (e.getSource() instanceof JToggleButton)
+		{
+			this.selectedOption = (JToggleButton) e.getSource();
+			
+			System.out.println(this.selectedOption.getText());
+			this.interactionTitle.setText(this.selectedOption.getText());
+		}
 	}
 }
