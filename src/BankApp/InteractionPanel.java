@@ -20,7 +20,6 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	private static final long serialVersionUID = -8965688801455558536L;
 	
 	private JLabel label = new JLabel();
-	private JToggleButton selectedOption = new JToggleButton();
 
 	InteractionPanel()
 	{
@@ -55,9 +54,14 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 
 	@Override
 	public void buttonClicked() 
-	{
-		this.label.setText(super.getSelectedAction().getText());
+	{	
+		// Execute the code in the form of a Runnable object, later when it should in the Event Dispatch Thread. Allows for proper synchronyzations.
+	    SwingUtilities.invokeLater(() -> {
+	    	// Set text to the name of the action starting after the numbered list. 
+	        this.label.setText(super.getSelectedAction().getText().substring(2)); 
+	    });
 	}
+
 	
 
 }

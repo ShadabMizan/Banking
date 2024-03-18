@@ -17,8 +17,6 @@ public class ContentPanel extends JPanel
 	private final Font font = loadFont("Assets/Roboto-Regular.ttf");
 	protected final Color primaryColour = new Color(0x612AFD);
 	
-	protected String test = "hi";	
-	
 	protected static JToggleButton selectedAction = new JToggleButton("Select an Action");
 	
     private static Font loadFont(String fontFileName) 
