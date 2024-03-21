@@ -2,5 +2,5 @@ package BankApp;
 
 public interface ActionButtonListener 
 {
-	void buttonClicked();
+	void actionClicked();
 }

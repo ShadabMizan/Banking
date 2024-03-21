@@ -7,7 +7,7 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-public class ClientPanel extends ContentPanel
+public class ClientPanel extends ContentPanel implements ActionButtonListener
 {
 	private static final long serialVersionUID = -2853494268694350269L;
 
@@ -28,5 +28,11 @@ public class ClientPanel extends ContentPanel
         clientTitle.setHorizontalAlignment(JLabel.CENTER);
         
         this.add(clientTitle);
+	}
+
+	@Override
+	public void actionClicked() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -38,6 +38,8 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
         // Interaction Panel will have 1440px width and 200px height. 
         // Height will not scale, since Bounded SOUTH
         this.setPreferredSize(new Dimension(1440, 200)); 
+        
+        
 	}
 	
 	private void titleSetup()
@@ -53,15 +55,12 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	}
 
 	@Override
-	public void buttonClicked() 
+	public void actionClicked() 
 	{	
 		// Execute the code in the form of a Runnable object, later when it should in the Event Dispatch Thread. Allows for proper synchronyzations.
 	    SwingUtilities.invokeLater(() -> {
 	    	// Set text to the name of the action starting after the numbered list. 
-	        this.label.setText(super.getSelectedAction().getText().substring(2)); 
+	        this.label.setText(super.getSelectedAction().getText().substring(2));
 	    });
 	}
-
-	
-
 }

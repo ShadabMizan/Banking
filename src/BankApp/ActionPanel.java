@@ -24,13 +24,16 @@ public class ActionPanel extends ContentPanel implements ActionListener
     
     private int numOfOptions = 5;
     
-    private ActionButtonListener listener;
+    private ActionButtonListener[] listeners = new ActionButtonListener[2];
     
-	public ActionPanel(ActionButtonListener listener)
+	public ActionPanel(ActionButtonListener[] listeners)
 	{       
 		panelSetup();
 		titleSetup();
-		optionSetup(listener);
+		
+		this.listeners = listeners;
+		
+		optionSetup(this.listeners);
 	}
 	
 	private void titleSetup()
@@ -57,9 +60,8 @@ public class ActionPanel extends ContentPanel implements ActionListener
         this.setPreferredSize(new Dimension(264, 800)); 
 	}
 	
-	private void optionSetup(ActionButtonListener listener)
+	private void optionSetup(ActionButtonListener[] listeners)
 	{
-		this.listener = listener;
 		
 		
         for (int i = 0; i < 5; i++)
@@ -100,10 +102,15 @@ public class ActionPanel extends ContentPanel implements ActionListener
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					if (listener != null)
+					// Whenever the event is fired, every subscriber should fire their actionClicked() function
+					for (ActionButtonListener subscriber : listeners) 
 					{
-						listener.buttonClicked();
+						if (subscriber != null)
+						{
+							subscriber.actionClicked();
+						}
 					}
+
 				}
         	});
  
