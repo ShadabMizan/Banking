@@ -1,30 +1,51 @@
 package BankApp;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
-public class InteractionPanel extends ContentPanel implements ActionButtonListener
+public class InteractionPanel extends ContentPanel implements ActionButtonListener, ActionListener
 {
 	private static final long serialVersionUID = -8965688801455558536L;
 	
 	private JLabel label = new JLabel();
+	
+	private JPanel cardPanel;
+    private CardLayout cardLayout = new CardLayout();
+	JPanel emptyPanel = new JPanel();
 
 	InteractionPanel()
 	{
 		panelSetup(); 
 		titleSetup();
+		
+		createAccountSetup();
+		viewAccountSetup();
+		depositFundsSetup();
+		withdrawFundsSetup();
+		eTransferSetup();
+		
+		cardLayout.show(cardPanel, "empty"); // Empty screen initially
 	}
 	
 	private void panelSetup()
@@ -38,29 +59,163 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
         // Interaction Panel will have 1440px width and 200px height. 
         // Height will not scale, since Bounded SOUTH
         this.setPreferredSize(new Dimension(1440, 200)); 
-        
-        
+        cardPanel = new JPanel(cardLayout);
+
+		emptyPanel.setBackground(getBackground());
+		cardPanel.add(emptyPanel, "empty");
+		
+		JPanel buttonPanel = new JPanel();
+		
+		
+		CircularButton ok = new CircularButton("OK", 100);
+		ok.setBackground(primaryColour);
+		ok.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 24));
+		ok.setForeground(Color.white);
+		ok.addActionListener(this);
+		
+		buttonPanel.add(ok);
+		buttonPanel.setBackground(getBackground());
+		
+		
+		this.add(buttonPanel, BorderLayout.EAST);
+        this.add(cardPanel, BorderLayout.CENTER);	       
 	}
 	
 	private void titleSetup()
 	{
         // Title Styles
-		this.label.setText("Select an Action");
-        this.label.setVerticalAlignment(JLabel.TOP);
-        this.label.setHorizontalAlignment(JLabel.CENTER);
-        this.label.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32)); //32px Font size
-        this.label.setForeground(Color.white);
+		label.setText("Select an Action");
+        label.setVerticalAlignment(JLabel.TOP);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 32)); //32px Font size
+        label.setForeground(Color.white);
         
-        this.add(this.label, BorderLayout.NORTH);
+        this.add(label, BorderLayout.NORTH);
 	}
+	
+	private void createAccountSetup()
+	{
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBorder(new EmptyBorder(25,0,25,0)); 
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		
+        JPanel gridPanel = new JPanel(new GridLayout(3,2,8,8));
+        gridPanel.setPreferredSize(new Dimension(100,300));
+        
+		JLabel nameLabel = new JLabel("Name:");
+		nameLabel.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
+		nameLabel.setForeground(Color.white);
+		JTextField nameField = new JTextField(20);
+		
 
+		JLabel savingsLabel = new JLabel("Savings Balance:");
+		savingsLabel.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
+		savingsLabel.setForeground(Color.white);
+		JTextField savingsField = new JTextField(8);
+		
+		JLabel checkingLabel = new JLabel("Checking Balance:");
+		checkingLabel.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
+		checkingLabel.setForeground(Color.white);
+		JTextField checkingField = new JTextField(8);
+		
+		gridPanel.setBackground(getBackground());
+		gridPanel.add(nameLabel);
+		gridPanel.add(nameField);
+		gridPanel.add(savingsLabel);
+		gridPanel.add(savingsField);
+		gridPanel.add(checkingLabel);
+		gridPanel.add(checkingField);
+		
+		panel.setBackground(getBackground());
+		panel.add(gridPanel, gbc);
+        cardPanel.add(panel, "Create an Account");
+	}
+	
+	private void viewAccountSetup()
+	{
+		JPanel panel = new JPanel();
+		panel.setBorder(new EmptyBorder(25,0,25,0));
+		
+		JLabel accountName = new JLabel("Select an Account to View");
+		accountName.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
+		accountName.setForeground(Color.white);
+		
+		panel.setBackground(getBackground());
+		panel.add(accountName);
+        cardPanel.add(panel, "View an Account");
+	}
+	
+	private void depositFundsSetup()
+	{
+		JPanel panel = new JPanel();
+		panel.setBorder(new EmptyBorder(25,0,25,0));
+		
+		JLabel depositee = new JLabel("Select a depositor");
+		depositee.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
+		depositee.setForeground(Color.white);
+		
+		panel.setBackground(getBackground());
+		panel.add(depositee);
+        cardPanel.add(panel, "Deposit Funds");
+	}
+	
+	private void withdrawFundsSetup()
+	{
+		JPanel panel = new JPanel();
+		panel.setBorder(new EmptyBorder(25,0,25,0));
+		
+		JLabel withdrawee = new JLabel("Select a withdrawer");
+		withdrawee.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
+		withdrawee.setForeground(Color.white);
+		
+		panel.setBackground(getBackground());
+		
+		panel.add(withdrawee);
+        cardPanel.add(panel, "Withdraw Funds");
+	}
+	
+	private void eTransferSetup()
+	{
+		JPanel panel = new JPanel();
+		panel.setBorder(new EmptyBorder(25,0,25,0));
+		
+		JLabel sender = new JLabel("Select a sender");
+		sender.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
+		sender.setForeground(Color.white);
+		
+		JLabel receiver = new JLabel("Select a recevier");
+		receiver.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
+		receiver.setForeground(Color.white);
+		
+		panel.setBackground(getBackground());
+		
+		panel.add(sender);
+		panel.add(receiver);
+        cardPanel.add(panel, "E-Transfer");
+	}
+	
 	@Override
-	public void actionClicked() 
+	public void actionButtonClicked() 
 	{	
 		// Execute the code in the form of a Runnable object, later when it should in the Event Dispatch Thread. Allows for proper synchronyzations.
 	    SwingUtilities.invokeLater(() -> {
-	    	// Set text to the name of the action starting after the numbered list. 
-	        this.label.setText(super.getSelectedAction().getText().substring(2));
+	    	// Set text to the name of the action starting after the numbered list.
+	    	String action = super.getSelectedAction().getText().substring(3);
+	        label.setText(action);
+	        cardLayout.show(cardPanel, action);
 	    });
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		if (e.getSource() instanceof CircularButton)
+		{
+			
+		}
 	}
 }

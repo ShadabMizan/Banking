@@ -107,7 +107,7 @@ public class ActionPanel extends ContentPanel implements ActionListener
 					{
 						if (subscriber != null)
 						{
-							subscriber.actionClicked();
+							subscriber.actionButtonClicked();
 						}
 					}
 

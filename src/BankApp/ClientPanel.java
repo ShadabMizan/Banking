@@ -31,7 +31,7 @@ public class ClientPanel extends ContentPanel implements ActionButtonListener
 	}
 
 	@Override
-	public void actionClicked() {
+	public void actionButtonClicked() {
 		// TODO Auto-generated method stub
 		
 	}

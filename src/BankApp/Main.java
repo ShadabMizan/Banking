@@ -13,9 +13,7 @@ public class Main
 		ClientPanel clientPanel = new ClientPanel();
 		InteractionPanel interactionPanel = new InteractionPanel();
 		
-		ActionButtonListener[] actionSubscribers = new ActionButtonListener[2];
-		actionSubscribers[0] = clientPanel;
-		actionSubscribers[1] = interactionPanel;
+		ActionButtonListener[] actionSubscribers = {clientPanel, interactionPanel};
 		
 		ActionPanel actionPanel = new ActionPanel(actionSubscribers);
 		
