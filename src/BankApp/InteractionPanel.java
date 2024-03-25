@@ -3,16 +3,20 @@ package BankApp;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -33,6 +37,8 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	private JPanel cardPanel;
     private CardLayout cardLayout = new CardLayout();
 	JPanel emptyPanel = new JPanel();
+	
+	private String currentCard;
 
 	InteractionPanel()
 	{
@@ -64,17 +70,26 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 		emptyPanel.setBackground(getBackground());
 		cardPanel.add(emptyPanel, "empty");
 		
-		JPanel buttonPanel = new JPanel();
+		JPanel buttonPanel = new JPanel(new GridBagLayout());
 		
+		 // Create empty borders to add space around the button
+        int horizontalPadding = (buttonPanel.getWidth() - 100) / 2;
+        int verticalPadding = (buttonPanel.getHeight() - 100) / 2;
+        Insets padding = new Insets(verticalPadding, horizontalPadding, verticalPadding, horizontalPadding);
+        
 		
 		CircularButton ok = new CircularButton("OK", 100);
+		ok.setPreferredSize(new Dimension(100,100));
+		ok.setBorder(BorderFactory.createEmptyBorder(padding.top, padding.left, padding.bottom, padding.right));
+		
 		ok.setBackground(primaryColour);
 		ok.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 24));
 		ok.setForeground(Color.white);
 		ok.addActionListener(this);
-		
 		buttonPanel.add(ok);
+		
 		buttonPanel.setBackground(getBackground());
+		
 		
 		
 		this.add(buttonPanel, BorderLayout.EAST);
@@ -207,6 +222,7 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	    	String action = super.getSelectedAction().getText().substring(3);
 	        label.setText(action);
 	        cardLayout.show(cardPanel, action);
+	        currentCard = action;
 	    });
 	}
 
@@ -214,8 +230,25 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	public void actionPerformed(ActionEvent e) 
 	{
 		if (e.getSource() instanceof CircularButton)
-		{
-			
+		{			
+			switch(currentCard)
+			{
+			case "Create an Account":
+				System.out.println("Creating an Account now!");				
+				break;
+			case "View an Account":
+				System.out.println("Viewing an Account now!");
+				break;
+			case "Deposit Funds":
+				System.out.println("Depositing Funds now!");
+				break;
+			case "Withdraw Funds":
+				System.out.println("Withdrawing Funds now!");
+				break;
+			case "E-Transfer":
+				System.out.println("E-Transfering Funds now!");
+				break;
+			}
 		}
 	}
 }

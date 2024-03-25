@@ -30,5 +30,9 @@ public class Main
         frame.add(actionPanel, BorderLayout.WEST);
         frame.add(clientPanel, BorderLayout.CENTER);
         frame.add(interactionPanel, BorderLayout.SOUTH);
+        
+//        frame.pack();
+//        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 	}
 }
