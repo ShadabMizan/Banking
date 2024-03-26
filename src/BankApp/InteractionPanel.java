@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -72,14 +73,16 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 		
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 		
-		 // Create empty borders to add space around the button
+
+        
+		// Create a circular Button 
+		CircularButton ok = new CircularButton("OK", 100);
+		ok.setPreferredSize(new Dimension(100,100));
+		
+		// Create empty borders to add space around the button
         int horizontalPadding = (buttonPanel.getWidth() - 100) / 2;
         int verticalPadding = (buttonPanel.getHeight() - 100) / 2;
         Insets padding = new Insets(verticalPadding, horizontalPadding, verticalPadding, horizontalPadding);
-        
-		
-		CircularButton ok = new CircularButton("OK", 100);
-		ok.setPreferredSize(new Dimension(100,100));
 		ok.setBorder(BorderFactory.createEmptyBorder(padding.top, padding.left, padding.bottom, padding.right));
 		
 		ok.setBackground(primaryColour);
@@ -89,8 +92,6 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 		buttonPanel.add(ok);
 		
 		buttonPanel.setBackground(getBackground());
-		
-		
 		
 		this.add(buttonPanel, BorderLayout.EAST);
         this.add(cardPanel, BorderLayout.CENTER);	       
@@ -152,64 +153,116 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	
 	private void viewAccountSetup()
 	{
-		JPanel panel = new JPanel();
-		panel.setBorder(new EmptyBorder(25,0,25,0));
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBorder(new EmptyBorder(25,0,25,0)); 
 		
-		JLabel accountName = new JLabel("Select an Account to View");
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		JLabel accountName = new JLabel("Select Accounts to View");
 		accountName.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		accountName.setForeground(Color.white);
 		
 		panel.setBackground(getBackground());
-		panel.add(accountName);
+		panel.add(accountName, gbc);
         cardPanel.add(panel, "View an Account");
 	}
 	
 	private void depositFundsSetup()
 	{
-		JPanel panel = new JPanel();
-		panel.setBorder(new EmptyBorder(25,0,25,0));
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBorder(new EmptyBorder(25,0,25,0)); 
 		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		JPanel depositGrid = new JPanel(new GridLayout(2,1,0,8));
 		JLabel depositee = new JLabel("Select a depositor");
 		depositee.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		depositee.setForeground(Color.white);
 		
+		JTextField amount = new JTextField(8);
+		
+		depositGrid.setBackground(getBackground());
+		depositGrid.add(depositee);
+		depositGrid.add(amount);
+		
 		panel.setBackground(getBackground());
-		panel.add(depositee);
+		panel.add(depositGrid, gbc);
         cardPanel.add(panel, "Deposit Funds");
 	}
 	
 	private void withdrawFundsSetup()
 	{
-		JPanel panel = new JPanel();
-		panel.setBorder(new EmptyBorder(25,0,25,0));
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBorder(new EmptyBorder(25,0,25,0)); 
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		JPanel withdrawGrid = new JPanel(new GridLayout(2,1,0,8));
 		
 		JLabel withdrawee = new JLabel("Select a withdrawer");
 		withdrawee.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		withdrawee.setForeground(Color.white);
 		
+		JTextField amount = new JTextField(8);
+		
+		withdrawGrid.setBackground(getBackground());
+		withdrawGrid.add(withdrawee);
+		withdrawGrid.add(amount);
+		
 		panel.setBackground(getBackground());
 		
-		panel.add(withdrawee);
+		panel.add(withdrawGrid, gbc);
         cardPanel.add(panel, "Withdraw Funds");
 	}
 	
 	private void eTransferSetup()
 	{
-		JPanel panel = new JPanel();
-		panel.setBorder(new EmptyBorder(25,0,25,0));
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBorder(new EmptyBorder(25,0,25,0)); 
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		JPanel transferGrid = new JPanel(new GridLayout(3,1, 0, 16));
+		
+		JPanel senderGrid = new JPanel(new GridLayout(1,3,16,0));
 		
 		JLabel sender = new JLabel("Select a sender");
 		sender.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		sender.setForeground(Color.white);
 		
+		JTextField sendingAmout = new JTextField(8);
+
+		senderGrid.setBackground(getBackground());
+		senderGrid.add(sender);
+		senderGrid.add(sendingAmout);
+		
+		ImageIcon arrow = new ImageIcon("Assets/arrow-down.png");
+
+		JPanel receiverPanel = new JPanel(new GridBagLayout());
+		
 		JLabel receiver = new JLabel("Select a recevier");
 		receiver.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		receiver.setForeground(Color.white);
 		
+		receiverPanel.add(receiver);
+		receiverPanel.setBackground(getBackground());
+		
+		transferGrid.setBackground(getBackground());
+		transferGrid.add(senderGrid);
+		transferGrid.add(new JLabel(arrow));
+		transferGrid.add(receiverPanel);
+		
+		panel.add(transferGrid, gbc);
 		panel.setBackground(getBackground());
 		
-		panel.add(sender);
-		panel.add(receiver);
         cardPanel.add(panel, "E-Transfer");
 	}
 	
