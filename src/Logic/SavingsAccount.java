@@ -1,3 +1,4 @@
+package Logic;
 import java.util.ArrayList;
 
 public class SavingsAccount extends Account
@@ -7,13 +8,13 @@ public class SavingsAccount extends Account
 	private InterestPeriods interestPeriod = null;
 	private double interestRate = 0;
 		
-	SavingsAccount(String name, double balance)
+	public SavingsAccount(String name, double balance)
 	{
 		super(name, balance);
 		SavingsAccount.allSavingsAccounts.add(this);
 	}
 	
-	SavingsAccount(String name)
+	public SavingsAccount(String name)
 	{
 		super(name);
 		SavingsAccount.allSavingsAccounts.add(this);

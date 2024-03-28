@@ -1,17 +1,18 @@
+package Logic;
 public class Account 
 {
 	protected String name;
 	protected double balance;
 	
 	// Initialize a General Account with a name and some starting balance
-	Account(String name, double balance)
+	public Account(String name, double balance)
 	{
 		setName(name);
 		setBalance(balance);
 	}
 	
 	// Initialize a General Account with a name and empty balance
-	Account(String name)
+	public Account(String name)
 	{
 		setName(name);
 		setBalance(0.00);

@@ -1,16 +1,17 @@
+package Logic;
 import java.util.ArrayList;
 
 public class CheckingAccount extends Account
 {
 	private static ArrayList<CheckingAccount> allCheckingAccounts = new ArrayList<CheckingAccount>();
 	
-	CheckingAccount(String name, double balance) 
+	public CheckingAccount(String name, double balance) 
 	{
 		super(name, balance);
 		CheckingAccount.allCheckingAccounts.add(this);
 	}
 	
-	CheckingAccount(String name)
+	public CheckingAccount(String name)
 	{
 		super(name);
 		CheckingAccount.allCheckingAccounts.add(this);

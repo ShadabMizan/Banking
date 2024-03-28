@@ -1,9 +1,8 @@
+package Logic;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
-
-import BankApp.ActionButtonListener;
 
 public class ClientAccount
 {
@@ -18,7 +17,7 @@ public class ClientAccount
 	private final int ID;
 	
 	// Start an account with both a checking and savings account
-	ClientAccount(SavingsAccount savings, CheckingAccount checking) 
+	public ClientAccount(SavingsAccount savings, CheckingAccount checking) 
 	{
 		this.ID = setID();
 		setAccounts(savings, checking);	
@@ -27,7 +26,7 @@ public class ClientAccount
 	}
 	
 	// Start an Account with just a savings account
-	ClientAccount(SavingsAccount savings) 
+	public ClientAccount(SavingsAccount savings) 
 	{
 		this.ID = setID();
 		setAccounts(savings, null);
@@ -36,7 +35,7 @@ public class ClientAccount
 	}
 	
 	// Start an account with just a checking account
-	ClientAccount(CheckingAccount checking) 
+	public ClientAccount(CheckingAccount checking) 
 	{
 		this.ID = setID();
 		setAccounts(null, checking);
@@ -78,7 +77,7 @@ public class ClientAccount
 	}
 	
 	// Retrieve ID number
-	int getID() { return this.ID; }
+	public int getID() { return this.ID; }
 	
 	// View all client IDs ever made. All should be unique
 	public static Set<Integer> getAllClientIDs() { return allClientAccounts.keySet(); }

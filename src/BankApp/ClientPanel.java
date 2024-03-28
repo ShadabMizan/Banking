@@ -11,7 +11,7 @@ public class ClientPanel extends ContentPanel implements ActionButtonListener
 {
 	private static final long serialVersionUID = -2853494268694350269L;
 
-	ClientPanel()
+	public ClientPanel()
 	{
 		// Panel Styles
         this.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16)); // Add 16 pixels of padding around the panel

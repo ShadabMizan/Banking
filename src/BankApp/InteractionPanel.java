@@ -1,11 +1,8 @@
 package BankApp;
-
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,21 +10,15 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
-
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+
+import Logic.*;
 
 public class InteractionPanel extends ContentPanel implements ActionButtonListener, ActionListener
 {
@@ -40,8 +31,12 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	JPanel emptyPanel = new JPanel();
 	
 	private String currentCard;
+	
+	private CircularButton ok;
+	
+	private JTextField[] allFields = new JTextField[6]; 
 
-	InteractionPanel()
+	public InteractionPanel()
 	{
 		panelSetup(); 
 		titleSetup();
@@ -76,7 +71,7 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 
         
 		// Create a circular Button 
-		CircularButton ok = new CircularButton("OK", 100);
+		ok = new CircularButton("OK", 100);
 		ok.setPreferredSize(new Dimension(100,100));
 		
 		// Create empty borders to add space around the button
@@ -126,17 +121,19 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 		nameLabel.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		nameLabel.setForeground(Color.white);
 		JTextField nameField = new JTextField(20);
-		
+		allFields[0] = nameField;
 
 		JLabel savingsLabel = new JLabel("Savings Balance:");
 		savingsLabel.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		savingsLabel.setForeground(Color.white);
 		JTextField savingsField = new JTextField(8);
+		allFields[1] = savingsField;
 		
 		JLabel checkingLabel = new JLabel("Checking Balance:");
 		checkingLabel.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		checkingLabel.setForeground(Color.white);
 		JTextField checkingField = new JTextField(8);
+		allFields[2] = checkingField;
 		
 		gridPanel.setBackground(getBackground());
 		gridPanel.add(nameLabel);
@@ -183,11 +180,12 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 		depositee.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		depositee.setForeground(Color.white);
 		
-		JTextField amount = new JTextField(8);
+		JTextField depositAmount = new JTextField(8);
+		allFields[3] = depositAmount;
 		
 		depositGrid.setBackground(getBackground());
 		depositGrid.add(depositee);
-		depositGrid.add(amount);
+		depositGrid.add(depositAmount);
 		
 		panel.setBackground(getBackground());
 		panel.add(depositGrid, gbc);
@@ -209,11 +207,12 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 		withdrawee.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		withdrawee.setForeground(Color.white);
 		
-		JTextField amount = new JTextField(8);
+		JTextField withdrawAmount = new JTextField(8);
+		allFields[4] = withdrawAmount;
 		
 		withdrawGrid.setBackground(getBackground());
 		withdrawGrid.add(withdrawee);
-		withdrawGrid.add(amount);
+		withdrawGrid.add(withdrawAmount);
 		
 		panel.setBackground(getBackground());
 		
@@ -238,11 +237,12 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 		sender.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 20));
 		sender.setForeground(Color.white);
 		
-		JTextField sendingAmout = new JTextField(8);
+		JTextField sendingAmount = new JTextField(8);
+		allFields[5] = sendingAmount;
 
 		senderGrid.setBackground(getBackground());
 		senderGrid.add(sender);
-		senderGrid.add(sendingAmout);
+		senderGrid.add(sendingAmount);
 		
 		ImageIcon arrow = new ImageIcon("Assets/arrow-down.png");
 
@@ -276,32 +276,60 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	        label.setText(action);
 	        cardLayout.show(cardPanel, action);
 	        currentCard = action;
+	        
+	        clearTextFields();
 	    });
 	}
 
+	private void clearTextFields()
+	{
+		for (JTextField field : allFields)
+		{
+			field.setText(null);
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		if (e.getSource() instanceof CircularButton)
+		if (e.getSource() == ok)
 		{			
 			switch(currentCard)
 			{
 			case "Create an Account":
-				System.out.println("Creating an Account now!");				
+				String name = allFields[0].getText();
+				double savingsBalance = Double.parseDouble(allFields[1].getText());
+				double checkingBalance = Double.parseDouble(allFields[2].getText());
+				createAccount(name, checkingBalance, savingsBalance);				
 				break;
 			case "View an Account":
-				System.out.println("Viewing an Account now!");
+				viewAllAccounts();
 				break;
 			case "Deposit Funds":
-				System.out.println("Depositing Funds now!");
+				
+				
 				break;
 			case "Withdraw Funds":
-				System.out.println("Withdrawing Funds now!");
+				
+				
 				break;
 			case "E-Transfer":
-				System.out.println("E-Transfering Funds now!");
+				
+				
 				break;
 			}
+		}
+	}
+	
+	private void createAccount(String name, double checkingBalance, double savingsBalance)
+	{
+		new ClientAccount(new SavingsAccount(name, savingsBalance), new CheckingAccount(name, checkingBalance));
+	}
+	
+	private void viewAllAccounts()
+	{
+		for (ClientAccount client : ClientAccount.getAllClientAccounts())
+		{
+			System.out.println(client.print());
 		}
 	}
 }
