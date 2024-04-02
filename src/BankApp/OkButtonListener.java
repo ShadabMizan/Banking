@@ -1,6 +1,7 @@
 package BankApp;
+import Logic.*;
 
 public interface OkButtonListener 
 {
-	public void okButtonClicked();
+	public void getNewAccount(ClientAccount account);
 }

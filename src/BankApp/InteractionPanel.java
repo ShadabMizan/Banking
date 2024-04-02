@@ -26,6 +26,8 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	
 	private JLabel label = new JLabel();
 	
+	private OkButtonListener listener;
+	
 	private JPanel cardPanel;
     private CardLayout cardLayout = new CardLayout();
 	JPanel emptyPanel = new JPanel();
@@ -36,7 +38,7 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	
 	private JTextField[] allFields = new JTextField[6]; 
 
-	public InteractionPanel()
+	public InteractionPanel(OkButtonListener listener)
 	{
 		panelSetup(); 
 		titleSetup();
@@ -48,6 +50,7 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 		eTransferSetup();
 		
 		cardLayout.show(cardPanel, "empty"); // Empty screen initially
+		this.listener = listener;
 	}
 	
 	private void panelSetup()
@@ -83,7 +86,41 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 		ok.setBackground(primaryColour);
 		ok.setFont(super.retrieveFont().deriveFont(Font.PLAIN, 24));
 		ok.setForeground(Color.white);
-		ok.addActionListener(this);
+		
+		ok.addActionListener(new ActionListener() 
+		{
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+    			switch(currentCard)
+    			{
+    			case "Create an Account":
+    				String name = allFields[0].getText();
+    				double savingsBalance = Double.parseDouble(allFields[1].getText());
+    				double checkingBalance = Double.parseDouble(allFields[2].getText());
+    				listener.getNewAccount(createAccount(name, checkingBalance, savingsBalance));
+    				
+    				
+    				break;
+    			case "View an Account":
+    				viewAllAccounts();
+    				break;
+    			case "Deposit Funds":
+    				
+    				
+    				break;
+    			case "Withdraw Funds":
+    				
+    				
+    				break;
+    			case "E-Transfer":
+    				
+    				
+    				break;
+    			}
+            }
+		});
+		
 		buttonPanel.add(ok);
 		
 		buttonPanel.setBackground(getBackground());
@@ -291,38 +328,12 @@ public class InteractionPanel extends ContentPanel implements ActionButtonListen
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		if (e.getSource() == ok)
-		{			
-			switch(currentCard)
-			{
-			case "Create an Account":
-				String name = allFields[0].getText();
-				double savingsBalance = Double.parseDouble(allFields[1].getText());
-				double checkingBalance = Double.parseDouble(allFields[2].getText());
-				createAccount(name, checkingBalance, savingsBalance);				
-				break;
-			case "View an Account":
-				viewAllAccounts();
-				break;
-			case "Deposit Funds":
-				
-				
-				break;
-			case "Withdraw Funds":
-				
-				
-				break;
-			case "E-Transfer":
-				
-				
-				break;
-			}
-		}
+		clearTextFields();
 	}
 	
-	private void createAccount(String name, double checkingBalance, double savingsBalance)
+	private ClientAccount createAccount(String name, double checkingBalance, double savingsBalance)
 	{
-		new ClientAccount(new SavingsAccount(name, savingsBalance), new CheckingAccount(name, checkingBalance));
+		return new ClientAccount(new SavingsAccount(name, savingsBalance), new CheckingAccount(name, checkingBalance));
 	}
 	
 	private void viewAllAccounts()

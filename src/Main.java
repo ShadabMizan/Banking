@@ -13,9 +13,9 @@ public class Main
 	{	
 		// Instantiate each panel
 		ClientPanel clientPanel = new ClientPanel();
-		InteractionPanel interactionPanel = new InteractionPanel();
+		InteractionPanel interactionPanel = new InteractionPanel(clientPanel);
 		
-		ActionButtonListener[] actionSubscribers = {clientPanel, interactionPanel};
+		ActionButtonListener[] actionSubscribers = {interactionPanel};
 		
 		ActionPanel actionPanel = new ActionPanel(actionSubscribers);
 		
